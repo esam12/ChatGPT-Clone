@@ -1,5 +1,7 @@
 import express, {Express} from 'express';
 import dotenv from 'dotenv';
+dotenv.config();
+
 import cors from 'cors';
 import http from 'http';
 import router from './routes/routes';
@@ -14,7 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 app.set("PORT", 3000);
 app.set("BASE_URL", "http://localhost:3000");
 
-dotenv.config();
 
 app.use("/api/v1",router);
 

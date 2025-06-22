@@ -1,9 +1,8 @@
 import { Router, Request, Response } from "express";
+import { generateGeminiAiResponsesController } from "../controllers/generate_open_ai_controller";
 
 const openAiRouter = Router();
 
-openAiRouter.post("/", (req: Request, res: Response) => {
-    res.json({ 'data': "From OpenAI " });
-});
+openAiRouter.post("/", generateGeminiAiResponsesController);
 
 export default openAiRouter;
