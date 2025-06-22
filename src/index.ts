@@ -2,6 +2,7 @@ import express, {Express} from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import http from 'http';
+import router from './routes/routes';
 
 const app: Express = express();
 const server = http.createServer(app);
@@ -14,6 +15,8 @@ app.set("PORT", 3000);
 app.set("BASE_URL", "http://localhost:3000");
 
 dotenv.config();
+
+app.use("/api/v1",router);
 
 try {
     server.listen(app.get("PORT"), () => {
