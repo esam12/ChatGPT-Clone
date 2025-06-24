@@ -8,5 +8,3 @@ class FakeFile extends StatelessWidget {
     return const Placeholder();
   }
 }
-
-
