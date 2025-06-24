@@ -140,7 +140,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           } else {
                             // Last page, navigate to main app
                           }
+                          
                         },
+
                         heroTag: 'nextDoneBtn', // Unique tag
                         backgroundColor: Colors.white, // Adjust color as needed
                         child: Icon(
