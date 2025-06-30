@@ -37,8 +37,7 @@ class OnboardingPage extends StatelessWidget {
         // --- The modified text block using ClipPath with WaveBottomClipper ---
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-          child:  GWaveBottomClipperWidget(
-          
+          child: GWaveBottomClipperWidget(
             child: Container(
               padding: const EdgeInsets.fromLTRB(
                 20.0,
@@ -47,7 +46,7 @@ class OnboardingPage extends StatelessWidget {
                 35.0,
               ), // Increased bottom padding for wave
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.white10,
                 boxShadow: [
                   // Added a subtle shadow as seen in the image
                   BoxShadow(

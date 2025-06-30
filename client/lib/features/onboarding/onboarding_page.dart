@@ -17,21 +17,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<OnboardingPageContent> pages = [
     OnboardingPageContent(
       imagePath: 'assets/images/gemini_ai.png', // Replace with your image paths
-      headerTitle: 'Add your ad in just a few steps',
+      headerTitle: 'Start chatting with Gemini in seconds',
       description:
-          'Add your ad in just two steps, let it reach many interested people, and complete your deal',
+          'Ask your question, get smart and helpful answers instantly — it’s that simple with Gemini AI.',
     ),
     OnboardingPageContent(
       imagePath: 'assets/images/gemini_ai.png',
-      headerTitle: 'Discover amazing deals',
+      headerTitle: 'Chat smarter with Gemini',
       description:
-          'Explore a wide variety of ads and find exactly what you\'re looking for.',
+          'Type your message and get instant, intelligent responses with Gemini AI.',
     ),
     OnboardingPageContent(
       imagePath: 'assets/images/gemini_ai.png',
-      headerTitle: 'Connect with sellers',
+      headerTitle: 'Your AI assistant is ready',
       description:
-          'Chat directly with sellers and finalize your purchases with ease.',
+          'Start a conversation with Gemini AI and get answers, insights, or inspiration in just moments.',
     ),
   ];
 
@@ -54,7 +54,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Stack(
         children: [
           // Main PageView
@@ -81,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 );
               },
               style: TextButton.styleFrom(
-                backgroundColor: Colors.white, // Example background color
+                backgroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20), // Rounded corners
                 ),
