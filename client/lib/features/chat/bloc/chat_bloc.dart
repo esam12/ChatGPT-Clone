@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:client/features/chat/repos/chat_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,15 +30,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       );
 
       emit(ChatNewMessageGenerated());
-      cachedMessages.add(ChatMessageModel(role: 'assistant', content: ''));
+      cachedMessages.add(ChatMessageModel(role: 'model', content: ''));
 
       _subscription?.cancel();
       _subscription = getGeminiResponseRepo(cachedMessages).listen((response) {
         for (String line in response.body.split('\n')) {
-          String jsonDataStirng = line.replaceFirst('data: ', '');
-          Map<String, dynamic> json = jsonDecode(jsonDataStirng.trim());
-          print(json.toString());
-          add(ChatNewContentEvent(content: json['data']));
+          String content = line.replaceFirst('data: ', "").trim();
+          add(ChatNewContentEvent(content: content));
+          
         }
       });
     } catch (e) {
@@ -61,7 +59,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     ChatMessageModel modelMessage = cachedMessages.last;
     String message = event.content;
     cachedMessages.last = ChatMessageModel(
-      role: 'assistant',
+      role: 'model',
       content: modelMessage.content + message,
     );
     emit(ChatNewMessageGenerated());

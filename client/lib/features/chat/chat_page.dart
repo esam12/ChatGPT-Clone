@@ -50,14 +50,13 @@ class _GeminiLikeScreenState extends State<GeminiLikeScreen> {
       body: SafeArea(
         child: BlocConsumer<ChatBloc, ChatState>(
           bloc: chatBloc,
-          listener: (context, state) {
-            // TODO: implement listener
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             return Column(
               children: [
-                const SizedBox(height: 80),
-
+                chatBloc.cachedMessages.isEmpty
+                    ? const SizedBox(height: 80)
+                    : Container(),
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.only(top: 8),
@@ -65,9 +64,9 @@ class _GeminiLikeScreenState extends State<GeminiLikeScreen> {
                     itemBuilder: (context, index) {
                       return Container(
                         decoration: BoxDecoration(
-                          color: chatBloc.cachedMessages[index].role == 'user'
-                              ? Colors.blue
-                              : Colors.yellow,
+                          color: chatBloc.cachedMessages[index].role == 'model'
+                              ? Colors.white
+                              : Colors.white,
                         ),
                         margin: EdgeInsets.only(bottom: 8),
                         padding: EdgeInsets.only(
@@ -76,63 +75,122 @@ class _GeminiLikeScreenState extends State<GeminiLikeScreen> {
                           bottom: 8,
                           top: 8,
                         ),
-                        child: Text(
-                          chatBloc.cachedMessages[index].content,
-                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            chatBloc.cachedMessages[index].role == 'model'
+                                ? Container(
+                                    width: 32,
+                                    height: 32,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'assets/images/google-gemini-icon.png',
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    width: 32,
+                                    height: 32,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'assets/images/profile.png',
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child:
+                                  chatBloc.cachedMessages[index].role == 'user'
+                                  ? Container(
+                                      alignment: Alignment.centerLeft,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 10,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xfff0f2f5),
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(16),
+                                          bottomLeft: Radius.circular(16),
+                                          bottomRight: Radius.circular(16),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        chatBloc.cachedMessages[index].content,
+                                        style:
+                                            chatBloc
+                                                    .cachedMessages[index]
+                                                    .role ==
+                                                'user'
+                                            ? Theme.of(
+                                                context,
+                                              ).textTheme.labelLarge
+                                            : Theme.of(
+                                                context,
+                                              ).textTheme.titleMedium,
+                                      ),
+                                    )
+                                  : Text(
+                                      chatBloc.cachedMessages[index].content,
+                                      style:
+                                          chatBloc.cachedMessages[index].role ==
+                                              'user'
+                                          ? Theme.of(
+                                              context,
+                                            ).textTheme.labelLarge
+                                          : Theme.of(
+                                              context,
+                                            ).textTheme.titleMedium,
+                                    ),
+                            ),
+                          ],
                         ),
                       );
                     },
                   ),
                 ),
 
-                // Gradient Text
-                Center(
-                  child: ShaderMask(
-                    shaderCallback: (bounds) => const LinearGradient(
-                      colors: [Colors.blue, Colors.purple, Colors.pink],
-                    ).createShader(bounds),
-                    child: const Text(
-                      'Hello, ISAM',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 40),
-
                 // Suggestion Buttons
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: suggestions
-                      .map(
-                        (text) => GestureDetector(
-                          onTap: () => _fillTextField(text),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 14,
-                              vertical: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              text,
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ),
+                chatBloc.cachedMessages.isEmpty
+                    ? Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: suggestions
+                            .map(
+                              (text) => GestureDetector(
+                                onTap: () => _fillTextField(text),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 10,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[100],
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Text(
+                                    text,
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
                       )
-                      .toList(),
-                ),
+                    : Container(),
 
-                const Spacer(),
+                const SizedBox(height: 16),
 
                 // Chat Input
                 Padding(
@@ -160,6 +218,7 @@ class _GeminiLikeScreenState extends State<GeminiLikeScreen> {
                                           message: _controller.text,
                                         ),
                                       );
+                                      _controller.clear();
                                     }
                                   },
                                   child: Icon(Icons.send, color: Colors.grey),

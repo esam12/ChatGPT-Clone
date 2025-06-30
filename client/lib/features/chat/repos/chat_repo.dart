@@ -16,7 +16,7 @@ Stream<http.Response> getGeminiResponseRepo(
   var client = http.Client();
   var request = http.Request(
     "POST",
-    Uri.parse('http://192.168.1.105:3000/api/v1/generate_response'),
+    Uri.parse('http://192.168.1.194:3000/api/v1/generate_response'),
   );
   request.headers['Accept'] = "text/event-stream";
   request.headers['Cache-Control'] = "no-cache";
