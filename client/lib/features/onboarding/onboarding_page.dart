@@ -1,3 +1,4 @@
+import 'package:client/features/chat/chat_page.dart';
 import 'package:client/features/onboarding/widgets/onboarding_page_content.dart';
 import 'package:flutter/material.dart';
 
@@ -72,6 +73,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: TextButton(
               onPressed: () {
                 // Handle skip action, navigate to main app
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const GeminiLikeScreen(),
+                  ),
+                );
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.white, // Example background color
@@ -139,8 +146,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             );
                           } else {
                             // Last page, navigate to main app
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const GeminiLikeScreen(),
+                              ),
+                            );
                           }
-                          
                         },
 
                         heroTag: 'nextDoneBtn', // Unique tag

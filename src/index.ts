@@ -20,7 +20,7 @@ app.set("BASE_URL", "http://localhost:3000");
 app.use("/api/v1",router);
 
 try {
-    server.listen(app.get("PORT"), () => {
+     server.listen(app.get("PORT"), '0.0.0.0', () => {
         console.log(`Server running on port ${app.get("PORT")}`);
     });
 } catch (error) {
